@@ -64,23 +64,6 @@
   artículos y moderar comentarios.
   El contenido ya almacenado en MySQL se conserva.
 
-  ## Despliegue en Vercel
-
-  El proyecto Vite está dentro de la carpeta `cocina` del repositorio. En la
-  configuración del proyecto de Vercel establece **Root Directory** en
-  `cocina`, usa `npm run build` como comando de compilación y `dist` como
-  directorio de salida. Vercel leerá `vercel.json` para dirigir las rutas de la
-  aplicación React a `index.html`.
-
-  La aplicación necesita PHP/MySQL para autenticación y API; un despliegue
-  estático de `dist` en Vercel no proporciona esos endpoints. Para usar el
-  inicio de sesión y el CRUD, despliega la carpeta PHP en un servidor con
-  Apache y MySQL/MariaDB siguiendo los pasos locales.
-
-  El formulario de contacto abre Gmail con un borrador dirigido a
-  `fsfiligoyborkoski@gmail.com`. El email de la cuenta con sesión se incluye
-  como dirección de respuesta; la persona revisa y envía el mensaje desde Gmail.
-
   ## Autenticación local en PHP y MySQL
 
   El módulo de autenticación para XAMPP/Laragon incluye:
