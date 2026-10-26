@@ -1,0 +1,53 @@
+INFORME Y EVIDENCIAS - FORMULARIOS Y CONTACTO
+Proyecto: Recetas Sencillas
+Fecha: 2026-10-03
+
+ESTADO ACTUAL
+
+1. Busqueda GET
+La busqueda avanzada usa un formulario HTML con method="get" y envia los parametros q y category a /advanced-search. En PHP, el termino se recorta con trim(), se limita a 120 caracteres y la categoria se acepta solo si pertenece a una lista permitida. El estado se incorpora al cliente con json_encode y las opciones JSON_HEX_TAG, JSON_HEX_AMP, JSON_HEX_APOS y JSON_HEX_QUOT. React muestra los valores como texto, sin interpretarlos como HTML.
+
+2. Contacto por Gmail
+Por solicitud posterior, se retiro el formulario de texto y el procesamiento POST. El boton "Enviar mensaje" abre un borrador de Gmail en una pestaña nueva con CONTACT_EMAIL y el asunto prellenados; la persona escribe y envia el mensaje desde Gmail. Actualmente no existe envio POST ni envio automatico desde el servidor. Gmail identifica la cuenta remitente, por lo que este flujo no es anonimo para quien recibe el correo.
+
+3. Cambios relacionados con despliegue
+Se excluyo node_modules del repositorio para que Vercel instale las dependencias en su entorno Linux. La carpeta node_modules local no se elimino.
+
+PRUEBAS EJECUTADAS
+
+A. Build de produccion
+Comando: npm run build
+Resultado: APROBADO
+Salida relevante:
+  vite v6.3.5 building for production...
+  1634 modules transformed.
+  dist/index.html                   1.57 kB
+  dist/assets/index-DFMmgBSz.css  108.23 kB
+  dist/assets/index-DdlSkL55.js   279.65 kB
+  built in 2.44s
+
+B. Prueba de busqueda en navegador local
+Accion: se escribio "pollo", se eligio la categoria "Carnes" y se envio el formulario.
+Resultado: APROBADO
+Metodo del formulario: GET
+URL observada: http://127.0.0.1:5173/advanced-search?q=pollo&category=Carnes
+
+C. Prueba del boton de contacto en navegador local
+Accion: se inspecciono el enlace "Enviar mensaje".
+Resultado: APROBADO
+Destino: https://mail.google.com/mail/?view=cm&fs=1&to=<CONTACT_EMAIL>&su=Mensaje+desde+Recetas+Sencillas
+Apertura: pestaña nueva (_blank)
+El cuerpo del mensaje queda vacio para redactarlo en Gmail.
+
+D. Diagnosticos del editor
+Archivos revisados: AdvancedSearchPage.tsx, SupplierContactPage.tsx, index.php e includes/footer.php.
+Resultado: sin errores reportados.
+
+E. PHP en tiempo de ejecucion
+Resultado: NO EJECUTADO
+El entorno local no tiene PHP disponible; no se pudo correr php -l ni una prueba de integracion con Apache. El envio PHP POST ya no forma parte del flujo actual.
+
+NOTAS
+- El repositorio no tiene un script automatizado de pruebas; package.json define build y dev. Las pruebas B y C fueron verificaciones funcionales manuales en el navegador automatizadas con Playwright.
+- El flujo Gmail requiere que el navegador pueda abrir Gmail y que la persona envie el borrador.
+- La regla PHP de sanitizacion GET aplica cuando la aplicacion se sirve por index.php. En Vite, el navegador muestra el flujo React, pero no ejecuta PHP.

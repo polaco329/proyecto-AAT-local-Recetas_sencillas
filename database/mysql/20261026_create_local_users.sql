@@ -1,0 +1,12 @@
+USE recetas_sencillas;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(120) NOT NULL,
+  email VARCHAR(254) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  rol VARCHAR(20) NOT NULL DEFAULT 'usuario',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY users_email_unique (email),
+  INDEX users_rol_idx (rol)
+) ENGINE=InnoDB;

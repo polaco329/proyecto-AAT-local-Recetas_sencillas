@@ -1,0 +1,8 @@
+DirectoryIndex index.php
+
+RewriteEngine On
+
+# React Router necesita que las rutas internas vuelvan a la pantalla PHP.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
